@@ -6,7 +6,7 @@ import datetime
 host_list = ["www.google.com", "www.yahoo.com", "www.xbox.com"]
 
 # log directory
-log_dir = "/Users/corneliuswienz/Documents/log testing"
+log_dir = "/log testing"
 
 # ping test function that suppresses the ping results output
 # https://stackoverflow.com/questions/28769023/get-output-of-system-ping-without-printing-to-the-console
