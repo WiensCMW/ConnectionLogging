@@ -1,23 +1,40 @@
 import os
+import subprocess
+import datetime
 
-# Variables
-hostname = "google.com"
+# list of addresses to use in the ping test
+host_list = ["www.google.com", "www.yahoo.com", "www.xbox.com"]
 
-# https://stackoverflow.com/questions/26468640/python-function-to-test-ping
-def check_ping():
-    pingstatus = ""
-    try:
-        response = os.system("ping -c 1 " + hostname)
-        # and then check the response...
-        if response == 0:
-            pingstatus = "Network Active"
-        else:
-            pingstatus = "Network Error"
-    except Exception as e:
-        pingstatus = e
+# log directory
+log_dir = "/Users/corneliuswienz/Documents/log testing"
 
-    return pingstatus
+# ping test function that suppresses the ping results output
+# https://stackoverflow.com/questions/28769023/get-output-of-system-ping-without-printing-to-the-console
+def pingtest(host_name):
+    with open(os.devnull, 'w') as DEVNULL:
+        try:
+            subprocess.check_call(
+                ['ping', '-c', '3', host_name],
+                stdout=DEVNULL,  # suppress output
+                stderr=DEVNULL
+            )
+            results = True
+        except subprocess.CalledProcessError:
+            results = False
 
-pingResults = check_ping()
+    return results
 
-print(pingResults)
+# loop through host list and perform ping test until one succeeds
+pingtest_passed = False
+i = 0
+while i < len(host_list):
+    if (pingtest(host_list[i])) is True:
+        pingtest_passed = True
+        break
+    i += 1
+
+# handle failed ping
+if pingtest_passed is False:
+    print("Failed")
+
+# print(datetime.datetime.now())
