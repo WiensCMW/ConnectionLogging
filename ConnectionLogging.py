@@ -35,6 +35,8 @@ while i < len(host_list):
 
 # handle failed ping
 if pingtest_passed is False:
-    print("Failed")
+    # log results to file
+    with open(log_dir + "/ping_fail_log.txt", "a") as myfile:
+        myfile.write(str(datetime.datetime.now()) + "\r\n")
 
 # print(datetime.datetime.now())
